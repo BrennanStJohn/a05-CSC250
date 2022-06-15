@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 struct empData {
 	
@@ -10,7 +11,7 @@ struct empData {
 	
 };
 
-int main(argc, argv[]){
+int main(int argc, char *argv[]){
 	
 	struct empData;
 	int userInput;
