@@ -3,21 +3,30 @@
 
 struct empData {
 	
-	char firstName[100];
-	char lastName[100];
-	int empNumber[100];
-	int empDept[100];
-	float empSalary[100];
+	int empNumber;
+	char firstName[10];
+	char lastName[10];
+	int empDept;
+	float empSalary;
 	
 };
 
-void getRecs(int numOfEmp, FILE *empFile, struct empData);
-void printID(int numOfEmp, int userInput);
+void getRecs(int numOfEmp, FILE *empFile, struct empData database[]);
+void printID(int numOfEmp, struct empData database[]);
+void printAll(int numOfEmp, struct empData database[]);
+void printDept(int numOfEmp, struct empData database[]);
 
 int main(int argc, char *argv[]){
 	
-	struct empData db;
+	typedef struct empData empData;
+	
+	empData db[100];
+	
 	int userInput;
+	
+	char garb;
+	
+	int i;
 
 	if (argc != 2) {
 		
@@ -39,6 +48,10 @@ int main(int argc, char *argv[]){
 	
 	fscanf(empFile, "%d", &numOfEmp);
 	
+	getRecs(numOfEmp, empFile, db);
+	
+	puts("");
+	
 	while ( userInput != -1) {
 		
 		
@@ -48,10 +61,10 @@ int main(int argc, char *argv[]){
 		puts("1:   Print Employee ID");
 		puts("2:   Print ALL Employees");
 		puts("3:   Show all employees in a department");
-		puts("4:   Show salaries from highest to lowest");
 		puts("-1:  QUIT");
+		puts("");
 		
-		printf("%s", "Input: ");
+		printf("%s", "Option: ");
 		
 		scanf("%d", &userInput);
 		
@@ -59,33 +72,18 @@ int main(int argc, char *argv[]){
 		
 		if (userInput == 1) {
 		
-		getRecs(numOfEmp, empFile, db);
-		
-		printID(numOfEmp, userInput);
+		printID(numOfEmp, db);
 		
 		}
 		
 		else if (userInput == 2) {
-			
-			/*
-			for (int i = 0; i < numOfEmp; i++) {	
-			fscanf(empFile, "%d%s%s%d%f", &db.empNumber[i], &db.firstName[i], &db.lastName[i], &db.empDept[i], db.empSalary[i]);
-			}
-			*/
-			for(int i = 0; i < numOfEmp; i++){
-			
-			printf("ID: %10s %d\n", db.empNumber[i]);
-			printf("First Name: %10s %s\n", db.firstName[i]);
-			printf("Last Name: %10s %s\n", db.lastName[i]);
-			printf("Department: %10s %d\n", db.empDept[i]);
-			printf("Salary: %10s %.2f\n", db.empSalary[i]);
-			
-			}
-			
+		
+		printAll(numOfEmp, db);
+				
 		}
 		else if (userInput == 3) {
 			
-			
+		printDept(numOfEmp, db);
 			
 		}
 		
@@ -113,62 +111,91 @@ int main(int argc, char *argv[]){
 			
 		}
 		
-		
-		
-		
-		
-		
-		
-		
 	}
 
 	fclose(empFile);
 
 }
 
-void getRecs(int numOfEmp, FILE *empFile, struct empData) {
+void getRecs(int numOfEmp,FILE *empFile, struct empData database[]){
+	
+	int i;
+	
+	for(i = 0; i < numOfEmp; i++) {
+	fscanf(empFile, "%d", &database[i].empNumber);
+	fscanf(empFile, "%s", &database[i].firstName);
+	fscanf(empFile, "%s", &database[i].lastName);
+	fscanf(empFile, "%d", &database[i].empDept);
+	fscanf(empFile, "%f", &database[i].empSalary);
+	}
+	
+	
+}
 
-	struct empData db;
+void printID(int numOfEmp, struct empData database[]){
 
-	for (int i = 0; i < numOfEmp; i++) {	
-		fscanf(empFile, "%d%s%s%d%f", &db.empNumber[i], &db.firstName[i], &db.lastName[i], &db.empDept[i], db.empSalary[i]);
+	int id;
+	
+	int i;
+	
+	printf("%s", "Which employee ID to print? ");
+	scanf("%d", &id);
+	puts("");
+			
+		for(i = 0; i < numOfEmp; i++){
+		
+			if (id == database[i].empNumber) {
+				
+				printf("%11s %10d\n", "ID:", database[i].empNumber);
+				printf("%11s %10s\n", "First Name:", database[i].firstName);
+				printf("%11s %10s\n", "Last Name:", database[i].lastName);
+				printf("%11s %10d\n", "Department:", database[i].empDept);
+				printf("%11s %10.2f\n", "Salary:", database[i].empSalary);
+				puts("");
+				
+			}
+		}
+}
+
+
+void printAll(int numOfEmp, struct empData database[]){
+	
+		int i;
+	
+		for(i = 0; i < numOfEmp; i++){
+				
+		printf("%11s %10d\n", "ID:", database[i].empNumber);
+		printf("%11s %10s\n", "First Name:", database[i].firstName);
+		printf("%11s %10s\n", "Last Name:", database[i].lastName);
+		printf("%11s %10d\n", "Department:", database[i].empDept);
+		printf("%11s %10.2f\n", "Salary:", database[i].empSalary);
+		puts("");
+				
 		}
 	
 }
 
-void printID(int numOfEmp, int userInput){
-
-	struct empData db;
+void printDept(int numOfEmp, struct empData database[]){
 	
-	int ID;
+	int dept;
 	
-		printf("%s", "Which employee ID to print? ");
-		scanf("%d", &ID);
+	int i;
+	
+	printf("%s", "Which employee Department to print? ");
+	scanf("%d", &dept);
+	puts("");
 			
-		/*
-		for (int i = 0; i < numOfEmp; i++) {	
-		fscanf(empFile, "%d%s%s%d%f", &db.empNumber[i], &db.firstName[i], &db.lastName[i], &db.empDept[i], db.empSalary[i]);
-		}
-		*/
-			
-		for(int i = 0; i < numOfEmp; i++){
+		for(i = 0; i < numOfEmp; i++){
 		
-			if (ID = db.empNumber[i]) {
+			if (dept == database[i].empDept) {
 				
-				printf("ID: %10s %d\n", db.empNumber[i]);
-				printf("First Name: %10s %s\n", db.firstName[i]);
-				printf("Last Name: %10s %s\n", db.lastName[i]);
-				printf("Department: %10s %d\n", db.empDept[i]);
-				printf("Salary: %10s %.2f\n", db.empSalary[i]);
-				
+				printf("%11s %10d\n", "ID:", database[i].empNumber);
+				printf("%11s %10s\n", "First Name:", database[i].firstName);
+				printf("%11s %10s\n", "Last Name:", database[i].lastName);
+				printf("%11s %10d\n", "Department:", database[i].empDept);
+				printf("%11s %10.2f\n", "Salary:", database[i].empSalary);
+				puts("");
 			}
-			else {
-				
-				printf("Employee %d not found!", userInput);
-				
-			}
-		
 		}
-			
-			
+	
 }
