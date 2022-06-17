@@ -4,8 +4,8 @@
 struct empData {
 	
 	int empNumber;
-	char firstName[10];
-	char lastName[10];
+	char firstName[15];
+	char lastName[15];
 	int empDept;
 	float empSalary;
 	
@@ -23,8 +23,6 @@ int main(int argc, char *argv[]){
 	empData db[1000];
 	
 	int userInput;
-	
-	char garb;
 	
 	int i;
 
@@ -87,18 +85,13 @@ int main(int argc, char *argv[]){
 			
 		}
 		
-		else if (userInput == 4) {
-			
-			
-			
-		}
 		else if (userInput == 0) {
 			
 			printf("Please enter a valid number!\n");
 			puts("");
 			
 		}
-		else if (userInput < -1 || userInput > 4) {
+		else if (userInput < -1 || userInput > 3) {
 			
 			printf("Please enter a valid number!\n");
 			puts("");
@@ -201,6 +194,7 @@ void printDept(int numOfEmp, struct empData database[]){
 				printf("%11s %10d\n", "Department:", database[i].empDept);
 				printf("%11s %10.2f\n", "Salary:", database[i].empSalary);
 				puts("");
+			
 			}
 
 		}
