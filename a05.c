@@ -20,7 +20,7 @@ int main(int argc, char *argv[]){
 	
 	typedef struct empData empData;
 	
-	empData db[100];
+	empData db[1000];
 	
 	int userInput;
 	
@@ -152,9 +152,15 @@ void printID(int numOfEmp, struct empData database[]){
 				printf("%11s %10d\n", "Department:", database[i].empDept);
 				printf("%11s %10.2f\n", "Salary:", database[i].empSalary);
 				puts("");
-				
+				break;
 			}
 		}
+		if (id != database[i].empNumber) {
+		printf("Employee %d does not exist!", id);
+		puts("");
+		puts("");
+		}
+
 }
 
 
@@ -196,6 +202,7 @@ void printDept(int numOfEmp, struct empData database[]){
 				printf("%11s %10.2f\n", "Salary:", database[i].empSalary);
 				puts("");
 			}
+
 		}
 	
 }
